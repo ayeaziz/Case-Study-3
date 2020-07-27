@@ -1,0 +1,34 @@
+---
+title: "Titanic"
+output: html_document
+---
+```{r}
+output <- read.csv("Titanic Predictions.csv")
+
+
+```
+I used the Titanic dataset from Kaggle to build a prediction model which will determine whether or not a passenger survived based on their age, gender, the fare they paid, whether or not they embarked with family, and where they embarked from. 
+
+The reason why I picked this data is because I tried to make this model years ago but I didn't know how to. After learning about Machine Learning, I decided to go back to this dataset and give it another try. 
+
+I started by importing the test and train datasets from Kaggle. I merged them together into one dataset to clean up the data all together. I created another column to identify which data belonged to the train set and which belonged to the test set. 
+
+I built a linear regression model to predict the missing age values. I did the same to predict the one missing value for Fare. I also assigned the two missing values from Embarked to "S" since that was the mean.
+
+I then built a prediction model to predict whether the Passengers on the Titanic survived or not using randomForest. randomForest implements Breiman's random forest algorithm for classification. I kept ntree as 500 which is the default. For mtry, I found the square root of 7 (the number of variables sampled to make the prediction) and rounded it the nearest whole number which is 3. I also changed the nodesize to be equal to 1% of the number of rows in the test dataset to generate more trees. 
+
+```{r}
+library(ggplot2)
+graph1 <- ggplot(output, aes(Gender, fill = Gender)) + geom_bar()
+graph1
+
+
+```
+The graph shows that a lot more men embarked the Titanic than women. There were nearly a hundred more men than women
+
+```{r}
+
+graph <- ggplot(output, aes(Survived, fill = Gender)) + geom_bar()
+graph
+```
+Looking at this graph, we can see that even though there were more men on the ship than women, most of them did not survive. Only a few women lost their lives compared to men.
